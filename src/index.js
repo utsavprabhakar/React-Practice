@@ -56,15 +56,16 @@ class Game extends React.Component {
         },
       ],
       turn: "X",
+      move: 0,
     };
   }
 
   handleClick(i) {
-    console.log(this.state.history[0]);
+    console.log(i);
     const history = this.state.history;
     const length = history.length;
     const squares = history[length - 1].squares.slice();
-    const winner = this.checkWinner(squares);
+    const winner = checkWinner(squares);
     if (winner) return;
     if (squares[i] === null) {
       squares[i] = this.state.turn;
@@ -79,6 +80,15 @@ class Game extends React.Component {
     }
   }
 
+  handleTimeClick(i) {
+    console.log(i);
+    const history = this.state.history;
+    this.setState({
+      history: history.slice(0, i + 1),
+      turn: i % 2 === 0 ? "X" : "O",
+    });
+  }
+
   render() {
     let status = "";
     let lastIndex = this.state.history.length - 1;
@@ -88,6 +98,19 @@ class Game extends React.Component {
     } else {
       status = "Next player is " + this.state.turn;
     }
+    const rows = [];
+    var baseStr = "Go to move #";
+    for (var i = 0; i <= lastIndex; i++) {
+      let item = i;
+      rows.push(
+        <Status
+          key={item}
+          value={baseStr + item}
+          onClick={() => this.handleTimeClick(item)}
+        />
+      );
+    }
+
     return (
       <div className="game">
         <div className="game-board">
@@ -99,11 +122,19 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{/* TODO */}</ol>
+          <ol>{rows}</ol>
         </div>
       </div>
     );
   }
+}
+
+function Status(props) {
+  return (
+    <li>
+      <button onClick={props.onClick}>{props.value}</button>
+    </li>
+  );
 }
 
 // ========================================
