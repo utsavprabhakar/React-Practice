@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Tic-tac-toe
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is done referencing this [Tutorial](https://reactjs.org/tutorial/tutorial.html) present on the react website.
 
 ## Available Scripts
 
